@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const CaptureSchema = new mongoose.Schema({
   image: { type: String, required: true },
@@ -10,6 +10,4 @@ const CaptureSchema = new mongoose.Schema({
   is_in_danger: { type: Boolean, default: false }
 });
 
-const Capture = mongoose.model("Capture", CaptureSchema);
-
-module.exports = Capture;
+export default mongoose.models.Capture || mongoose.model("Capture", CaptureSchema);
