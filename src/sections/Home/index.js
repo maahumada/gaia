@@ -6,7 +6,9 @@ import { ChartBackgroundImage, ChartContainer, ChartText, Container, FadeIn, Fad
 import AnimatedText from "@/components/AnimatedText";
 import { userId } from '@/lib/constants';
 import Link from 'next/link';
-import Map from "@/components/Map";
+import dynamic from "next/dynamic";
+
+const Map = dynamic(() => import("@/components/Map"), { ssr: false });
 
 const phrases = [
   "",
