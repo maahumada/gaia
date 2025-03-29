@@ -10,6 +10,11 @@ const GlobalStyle = createGlobalStyle`
     font-family: nunito;
   }
 
+  html {
+    background: #F6EDDC;
+    overflow: hidden;
+  }
+
   a {
     text-decoration: none;
     color: inherit;
