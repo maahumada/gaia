@@ -3,7 +3,6 @@ const mapStyles = {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      height: "100vh", // Full viewport height
   },
   map: {
       width: "90%",

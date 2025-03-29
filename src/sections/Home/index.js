@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import BarChart from "@/components/BarChart";
-import { ChartBackgroundImage, ChartContainer, ChartText, Container, FadeIn, FadeInLoader, FindingsSection, GridContainer, GridItem, GridItemContainer, Logo, MoreButton, Spacer, SpeciesName, StatHighlightText, Stats, StatText, StatTextHighlight, Subtitle, Title, WildlifeImage } from "./styles";
+import { ChartBackgroundImage, ChartContainer, ChartText, Container, FadeIn, FadeInLoader, FindingsSection, GridContainer, GridItem, GridItemContainer, Logo, MapContainer, MoreButton, Spacer, SpeciesName, StatHighlightText, Stats, StatText, StatTextHighlight, Subtitle, Title, WildlifeImage } from "./styles";
 import AnimatedText from "@/components/AnimatedText";
 import { userId } from '@/lib/constants';
 import Link from 'next/link';
+import Map from "@/components/Map";
 
 const phrases = [
   "",
@@ -74,6 +75,9 @@ const HomeSection = () => {
       </FadeIn>}
       <FindingsSection>
         <Subtitle>Rarest sightings near you - go find them!</Subtitle>
+        <MapContainer>
+          <Map />
+        </MapContainer>
       </FindingsSection>
       <MoreButton href={`/explore`}>Explore more</MoreButton>
       <Stats>
