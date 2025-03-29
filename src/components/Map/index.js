@@ -39,14 +39,14 @@ const Map = () => {
                         setUserLocation([position.coords.latitude, position.coords.longitude]);
                     },
                     (error) => {
-                        console.error("Geolocation error:", error);
-                        alert("Location access denied. Using default location.");
+                        console.log("Geolocation error:", error);
+                        console.log("Location access denied. Using default location.");
                         setUserLocation([-34.6037, -58.3816]); // Default to Buenos Aires
                     },
                     { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
                 );
             } else {
-                console.error("Geolocation not supported");
+                console.log("Geolocation not supported");
                 setUserLocation([-34.6037, -58.3816]); // Fallback
             }
         }
