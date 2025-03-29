@@ -1,6 +1,8 @@
+import HomeSection from "@/sections/Home";
+
 const Home = () => {
   return (
-    <h1>Home</h1>
+    <HomeSection />
   )
 }
 
