@@ -3,6 +3,7 @@ import StyledComponentsRegistry from "@/lib/registry";
 import Navbar from "@/components/Navbar";
 import GlobalStyle from "@/lib/globalStyles";
 import Footbar from "@/components/Footbar";
+import Head from "next/head";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -16,8 +17,21 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    <>
+    <Head>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=home" />
+    </Head>
     <html lang="en">
-      <body className={`${nunito}`}>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="gaia" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
+      </head>
+      <body className={`${nunito}`} style={{ maxHeight: "100vh" }}>
         <StyledComponentsRegistry>
           <GlobalStyle />
           <Navbar />
@@ -28,5 +42,6 @@ export default function RootLayout({ children }) {
         </StyledComponentsRegistry>
       </body>
     </html>
+    </>
   );
 }

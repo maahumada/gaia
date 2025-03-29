@@ -1,5 +1,7 @@
-import React from 'react';
-import Link from 'next/link';
+"use client"
+
+import { useParams, useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import {
   CardContainer,
   BackButton,
@@ -9,37 +11,66 @@ import {
   MetadataContainer,
   UserComment,
   InfoCard,
-  InfoText
+  InfoText,
+  TitleContainer,
+  BackButtonIcon,
+  EndangeredAlert
 } from './styles';
 
-const SpeciesCardSection = () => {
-  // This would come from your API/database
-  const speciesData = {
-    name: "Frogasmus epicardus",
-    image: "/path-to-image.jpg",
-    date: "23/02/2025 - 18:21hs",
-    location: "Entre rios, Argentina",
-    userComment: "holaaaaaaaaaa!! este bicho lo vimos en un camping con los chicos. estaba re bueno",
-    description: "Manu Frog is a rare amphibian species known for its vibrant emerald-green skin and unique ability to mimic the sounds of its surroundings, from bird calls to rustling leaves. Found primarily in the dense rainforests of South America, this elusive creature is most active during humid nights, using its webbed feet to navigate both land and water with ease. Scientists believe the Manu Frog's distinctive markings serve as a natural camouflage, helping it evade predators such as snakes and larger amphibians. Despite its charming appearance, the species remains largely unstudied due to its secretive nature and limited sightings in the wild."
-  };
+const SpeciesCardSection = ({ params }) => {
+
+  const [speciesData, setSpeciesData] = useState([]);
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const searchParams = useParams();
+  const { id } = searchParams;
+
+  useEffect(() => {
+    const fetchSpeciesData = async () => {
+      try {
+        const response = await fetch(`/api/capture/${id}`, {
+          method: "GET"
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch wildlife entries');
+        }
+        const data = await response.json();
+        setSpeciesData(data.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSpeciesData();
+  }, []);
+
+  const query = useSearchParams();
 
   return (
     <CardContainer>
-      <Link href="/album">
-        <BackButton>←</BackButton>
-      </Link>
-      
-      <SpeciesTitle>{speciesData.name}</SpeciesTitle>
+      <TitleContainer>
+        <BackButton href={query.get("returnurl") || "/album"}>
+          <BackButtonIcon src="/img/arrowLeft.png" width={12} height={20} alt="Back" />
+        </BackButton>
+        <SpeciesTitle>{speciesData.species_name}</SpeciesTitle>
+      </TitleContainer>
       
       <ImageContainer>
         <SpeciesImage src={speciesData.image} alt={speciesData.name} />
       </ImageContainer>
 
       <MetadataContainer>
-        {speciesData.location} — {speciesData.date}
+        {speciesData.location} - {speciesData.date && new Date(speciesData.date).toLocaleString()}
       </MetadataContainer>
 
-      <UserComment>{speciesData.userComment}</UserComment>
+      {speciesData?.caption && <UserComment>{speciesData.caption}</UserComment>}
+
+      {speciesData.is_endangered && (
+        <EndangeredAlert>This is an endangered species.</EndangeredAlert>
+      )}
       
       <InfoCard>
         <InfoText>{speciesData.description}</InfoText>

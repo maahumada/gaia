@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link'; // Change to Link import
+import Link from 'next/link';
 import {
   AlbumContainer,
   AlbumTitle,
@@ -10,6 +10,7 @@ import {
   WildlifeImage,
   SpeciesName
 } from './styles';
+import { userId } from '@/lib/constants';
 
 const AlbumSection = () => {
   const [wildlifeEntries, setWildlifeEntries] = useState([]);
@@ -19,12 +20,14 @@ const AlbumSection = () => {
   useEffect(() => {
     const fetchWildlifeEntries = async () => {
       try {
-        const response = await fetch('/api/wildlife-entries');
+        const response = await fetch(`/api/user/${userId}/album`, {
+          method: "GET"
+        });
         if (!response.ok) {
           throw new Error('Failed to fetch wildlife entries');
         }
         const data = await response.json();
-        setWildlifeEntries(data);
+        setWildlifeEntries(data.data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -49,17 +52,17 @@ const AlbumSection = () => {
       <GridContainer>
         {wildlifeEntries.map((entry) => (
           <Link 
-            href={`/species/${entry._id}`} 
+          href={`/species/${entry._id}?returnurl=/album`} 
             key={entry._id}
             style={{ textDecoration: 'none' }}
           >
             <GridItem>
               <WildlifeImage
-                src={entry.imageUrl}
-                alt={entry.name}
+                src={entry.image}
+                alt={entry.species_name}
               />
             </GridItem>
-            <SpeciesName>{entry.name}</SpeciesName>
+            <SpeciesName>{entry.species_name}</SpeciesName>
           </Link>
         ))}
       </GridContainer>

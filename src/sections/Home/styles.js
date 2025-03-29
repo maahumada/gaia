@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image";
+import Link from "next/link";
 import styled, { keyframes } from "styled-components";
 
 export const Container = styled.div`
@@ -13,17 +14,24 @@ export const Container = styled.div`
   position: relative;
 `
 
-const fadeIn = keyframes`
-  0% { opacity: 0; transform: scale(.6); transform: rotate3d(0, 1, 0, 45deg); }
+const fadeInSize = keyframes`
+  0% { opacity: 0; transform: scale(0); transform: rotate3d(0, 1, 0, 45deg); }
   100% { opacity: 1; transform: scale(1); transform: rotate3d(0, 1, 0, 0deg); }
 `
 
 export const Title = styled.h1`
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 700;
   color: #23513B;
   text-align: center;
-  animation: ${fadeIn} .6s forwards 1 ease-out;
+  animation: ${fadeInSize} .6s forwards 1 ease-out;
+  animation-delay: .2s;
+  transform: scale(0);
+`
+
+const fadeIn = keyframes`
+  0% { opacity: 0; transform: scale(0); }
+  100% { opacity: 1; transform: scale(1); }
 `
 
 const floating = keyframes`
@@ -34,6 +42,8 @@ const floating = keyframes`
 
 export const Logo = styled(Image)`
   animation: ${floating} 3s forwards infinite cubic-bezier(0.25, 0.1, 0.25, 1.0), ${fadeIn} .6s forwards 1 ease-out;
+  animation-delay: .2s;
+  transform: scale(0);
 `
 
 export const Stats = styled.div`
@@ -85,6 +95,11 @@ export const GridContainer = styled.div`
   max-width: 100%;
 `;
 
+export const GridItemContainer = styled(Link)`
+  cursor: pointer;
+  z-index: 2;
+`
+
 export const GridItem = styled.div`
   position: relative;
   aspect-ratio: 1;
@@ -108,7 +123,7 @@ export const SpeciesName = styled.p`
   font-size: 14px;
 `;
 
-export const MoreButton = styled.div`
+export const MoreButton = styled(Link)`
   border: none;
   background: #23513B;
   width: 100%;
@@ -119,6 +134,7 @@ export const MoreButton = styled.div`
   text-align: center;
   border-radius: 8px;
   cursor: pointer;
+  z-index: 1;
 `
 
 export const Spacer = styled.div`
@@ -153,23 +169,27 @@ export const ChartText = styled.p`
 `
 
 const fadeOut = keyframes`
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+  0% { opacity: 1; z-index: 10; }
+  99% { opacity: 0; z-index: 10; }
+  100% { opacity: 0; z-index: 0; }
 `
 
 export const FadeIn = styled.div`
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 60px;
   left: 0;
   width: 100vw;
   min-height: calc(100vh - 130px);
-  animation: ${fadeOut} 0.6s forwards 1 ease-out;
-  animation-delay: 0.6s;
+  animation: ${fadeOut} .3s forwards 1 ease-out;
+  animation-delay: 2s;
   background: #F6EDDC;
-  z-index: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 10;
+  gap: 16px;
+  padding: 0 16px;
 `
 
 const rotate = keyframes`
