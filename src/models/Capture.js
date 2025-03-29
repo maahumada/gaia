@@ -7,8 +7,7 @@ const CaptureSchema = new mongoose.Schema({
   description: { type: String },
   location: { type: String, required: true },
   date: { type: Date, default: Date.now },
-  is_invasive: { type: Boolean, default: false },
-  is_in_danger: { type: Boolean, default: false }
+  is_endangered: { type: Boolean, default: false }
 });
 
 export default mongoose.models.Capture || mongoose.model("Capture", CaptureSchema);

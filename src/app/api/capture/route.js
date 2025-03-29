@@ -2,6 +2,7 @@ import OpenAI from "openai";
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Capture from "@/models/Capture";
+import User from "@/models/User";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -19,12 +20,12 @@ export async function POST(request) {
   }
   await dbConnect();
 
-  let is_there_a_species = false, species_name, description, is_invasive = false, is_in_danger = false;
+  let is_there_a_species = false, species_name, description, is_endangered = false;
   try {
     const chatResponse = await openai.responses.create({
         model: "gpt-4o",
         input: [
-            { role: "system", content: 'You are a wildlife expert. You MUST only output a JSON object structured like: {"is_there_a_species": true or false, "species_name": name, "is_invasive": true or false, "is_in_danger": true or false, "description": <100-150 word description of the species. The JSON should not include triple brackets.}'},
+            { role: "system", content: 'You are a wildlife expert. You MUST only output a JSON object structured like: {"is_there_a_species": true or false, "species_name": name, "is_endangered": true or false, "description": <100-150 word description of the species. The JSON should not include triple brackets.}'},
             { role: "user", content: "Identify the name of the species shown in the picture. Be as specific as possible. If it is an invasive species, and if it is in danger of extinction" },            {
                 role: "user",
                 content: [
@@ -44,8 +45,7 @@ export async function POST(request) {
     if (!is_there_a_species) {
       return NextResponse.json({ ok: false, message: "No species found in the image" }, { status: 404 });
     }
-    is_invasive = responseText.is_invasive;
-    is_in_danger = responseText.is_in_danger;
+    is_endangered = responseText.is_endangered;
   } catch (err) {
     return NextResponse.json({ ok: false, message: "Error analyzing image", error: err.message }, { status: 500 });
   }
@@ -58,10 +58,20 @@ export async function POST(request) {
       caption,
       description,
       location,
-      is_invasive,
-      is_in_danger,
+      is_endangered,
       date
     });
+
+    await User.findByIdAndUpdate(
+      user_id,
+      { 
+        $push: { captures: capture._id },
+        $inc: { 
+          species_found: 1,
+          endangered_species_found: is_endangered ? 1 : 0 
+        }
+      }
+    );
 
     return NextResponse.json({ ok: true, message: "Capture created successfully", data: capture }, { status: 201 });
   } catch (err) {
