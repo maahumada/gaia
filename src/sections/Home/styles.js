@@ -14,6 +14,13 @@ export const Container = styled.div`
   position: relative;
 `
 
+export const MapContainer = styled.div`
+  width: 100%;
+  aspect-ratio: 1;
+  margin-bottom: -40px;
+  z-index: 1;
+`
+
 const fadeInSize = keyframes`
   0% { opacity: 0; transform: scale(0); transform: rotate3d(0, 1, 0, 45deg); }
   100% { opacity: 1; transform: scale(1); transform: rotate3d(0, 1, 0, 0deg); }
