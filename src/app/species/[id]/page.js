@@ -1,8 +1,8 @@
 import SpeciesCardSection from "@/sections/SpeciesCard";
 
-const SpeciesCard = () => {
+const SpeciesCard = ({ params }) => {
   return (
-    <SpeciesCardSection />
+    <SpeciesCardSection params={params} />
   )
 }
 

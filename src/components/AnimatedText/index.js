@@ -23,6 +23,10 @@ const AnimatedText = ({ target }) => {
     return () => unsubscribe(); // Cleanup listener on unmount
   }, [springValue]);
 
+  useEffect(() => {
+    
+  })
+
   return (
     <Animated>{displayNumber}</Animated>
   )

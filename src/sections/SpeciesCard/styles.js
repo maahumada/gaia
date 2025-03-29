@@ -1,5 +1,7 @@
 "use client"
 
+import Image from 'next/image';
+import Link from 'next/link';
 import styled from 'styled-components';
 
 export const CardContainer = styled.div`
@@ -10,27 +12,34 @@ export const CardContainer = styled.div`
   flex-direction: column;
 `;
 
-export const BackButton = styled.button`
+export const TitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 16px;
+  gap: 16px;
+`
+
+export const BackButton = styled(Link)`
   background: none;
   border: none;
-  font-size: 24px;
-  color: #23513B;
   cursor: pointer;
-  align-self: flex-start;
-  margin-bottom: 16px;
 `;
+
+export const BackButtonIcon = styled(Image)`
+
+`
 
 export const SpeciesTitle = styled.h1`
   font-family: 'Nunito', sans-serif;
   font-weight: bold;
   color: #23513B;
   font-size: 28px;
-  margin-bottom: 20px;
 `;
 
 export const ImageContainer = styled.div`
   width: 100%;
-  aspect-ratio: 16/9;
+  aspect-ratio: 1;
   border-radius: 8px;
   overflow: hidden;
   border: 2px solid #23513B;
@@ -58,13 +67,26 @@ export const UserComment = styled.p`
   margin-bottom: 24px;
 `;
 
+export const EndangeredAlert = styled.div`
+  background-color: rgba(255, 0, 0, 0.1);
+  color: rgb(206, 66, 27);
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+  font-size: 28px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+  text-align: center;
+  border: 3px solid rgb(206, 66, 27);
+`;
+
 export const InfoCard = styled.div`
-  background-color: #FFFFFF;
+  background-color: #F6EDDC;
   border-radius: 16px;
   padding: 20px;
   margin-bottom: 24px;
   position: relative;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 4px rgba(0, 0, 0, .4);
   
   &::before {
     content: '';
