@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   species_found: { type: Number, default: 0 },
+  endangered_species_found: { type: Number, default: 0},
   captures: [{ type: mongoose.Schema.Types.ObjectId, ref: "Capture" }]
 });
 
