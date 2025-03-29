@@ -13,11 +13,10 @@ export async function POST(request) {
     return NextResponse.json({ ok: false, message: "Invalid JSON body" }, { status: 400 });
   }
 
-  const { image, location } = body;
-  if (!image || !location) {
+  const { image, location, caption, date, user_id } = body;
+  if (!image || !location || !user_id) {
     return NextResponse.json({ ok: false, message: "Missing required fields" }, { status: 400 });
   }
-
   await dbConnect();
 
   let is_there_a_species = false, species_name, description, is_invasive = false, is_in_danger = false;
@@ -56,14 +55,31 @@ export async function POST(request) {
     const capture = await Capture.create({
       image,
       species_name,
+      caption,
       description,
       location,
       is_invasive,
-      is_in_danger
+      is_in_danger,
+      date
     });
 
     return NextResponse.json({ ok: true, message: "Capture created successfully", data: capture }, { status: 201 });
   } catch (err) {
     return NextResponse.json({ ok: false, message: "Error saving to database", error: err.message }, { status: 500 });
+  }
+}
+
+export async function GET() {
+  try {
+    await dbConnect();
+  } catch (err) {
+    return NextResponse.json({ ok: false, message: "Could not connect to database" }, { status: 500 });
+  }
+
+  try {
+    const captures = await Capture.find();
+    return NextResponse.json({ ok: true, message: "Data retrieved successfully", data: captures }, { status: 200 });
+  } catch (err) {
+    return NextResponse.json({ ok: false, message: "Could not retrieve data" }, { status: 500 });
   }
 }
