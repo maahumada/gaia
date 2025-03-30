@@ -86,8 +86,8 @@ export const Title = styled.h1`
 `
 
 const imageAnimation = keyframes`
-  0% { transform: scale(0) rotate(0deg) rotate3d(); }
-  100% { transform: scale(1) rotate(720deg); }
+  0% { transform: scale(0); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
 `
 
 export const MainImage = styled(Image)`
@@ -110,7 +110,7 @@ export const AIResponse = styled.div`
   width: 90%;
   margin-top: 12px;
   font-size: 20px;
-  max-height: calc(100vh - 500px);
+  max-height: calc(100vh - 600px);
   overflow-y: auto;
   padding: 8px 16px;
   box-shadow: 0 0 4px rgba(0, 0, 0, .4);
@@ -126,4 +126,47 @@ export const ResponseBackground = styled(Image)`
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   opacity: 0.1;
+`
+
+const endangeredAnimation = keyframes`
+  0% { transform: scale(0); opacity: 0.2; }
+  100% { transform: scale(1);  opacity: 1; }
+`
+
+export const EndangeredAlert = styled.div`
+  background-color: rgba(255, 0, 0, 0.1);
+  color: rgb(206, 66, 27);
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+  font-size: 28px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 0 16px;
+  text-align: center;
+  border: 3px solid rgb(206, 66, 27);
+  animation: ${endangeredAnimation} 1s forwards 1 ease-out;
+`;
+
+export const ErrorTitle = styled.p`
+  font-size: 32px;
+  font-weight: 700;
+  color: #23513B;
+  text-align: center;
+  max-width: 90%;
+`
+
+export const ErrorText = styled.p`
+  font-size: 24px;
+  font-weight: 700;
+  color: #23513B;
+  text-align: center;
+  max-width: 90%;
+`
+
+export const ErrorSubtitle = styled.p`
+  font-size: 26px;
+  font-weight: 700;
+  color: #23513B;
+  text-align: center;
+  max-width: 90%;
 `

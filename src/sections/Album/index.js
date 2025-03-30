@@ -11,7 +11,8 @@ import {
   SpeciesName,
   FadeIn,
   Logo,
-  Title
+  Title,
+  SpeciesContainer
 } from './styles';
 import { userId } from '@/lib/constants';
 
@@ -64,7 +65,7 @@ const AlbumSection = () => {
 
   if (isLoading) {
     return <FadeIn>
-      <Logo src="/img/gaiaLogo.png" width={309} height={210} alt="Gaia Logo" />
+      <Logo src="/img/gaiaLogo.png" width={309} height={210} alt="Gaia Logo" priority />
       <Title>{randomPhrase}</Title>
     </FadeIn>;
   }
@@ -78,19 +79,20 @@ const AlbumSection = () => {
       <AlbumTitle>Your wildlife album</AlbumTitle>
       <GridContainer>
         {wildlifeEntries.map((entry) => (
-          <Link 
-          href={`/species/${entry._id}?returnurl=/album`} 
-            key={entry._id}
-            style={{ textDecoration: 'none' }}
-          >
-            <GridItem>
-              <WildlifeImage
-                src={entry.image}
-                alt={entry.species_name}
-              />
-            </GridItem>
-            <SpeciesName>{entry.species_name}</SpeciesName>
-          </Link>
+          <SpeciesContainer key={entry._id}>
+            <Link 
+            href={`/species/${entry._id}?returnurl=/album`} 
+              style={{ textDecoration: 'none' }}
+            >
+              <GridItem>
+                <WildlifeImage
+                  src={entry.image}
+                  alt={entry.species_name}
+                />
+              </GridItem>
+              <SpeciesName>{entry.species_name}</SpeciesName>
+            </Link>
+          </SpeciesContainer>
         ))}
       </GridContainer>
     </AlbumContainer>

@@ -5,6 +5,7 @@ import { Container, LinkContainer, LinkIcon, LinkIconImage, HiddenInput, MainBut
 import { useForm } from "react-hook-form";
 import { userId } from "@/lib/constants";
 import Result from "../Result";
+import { usePathname, useRouter } from "next/navigation";
 
 const Footbar = () => {
 
@@ -71,10 +72,12 @@ const Footbar = () => {
     setResponseData(undefined);
     setIsLoading(false);
   }
+  
+  const pathname = usePathname();
 
   return (
     <>
-      {(responseData || isLoading) && <Result data={responseData?.data} isLoading={isLoading} closeModal={closeResult} />}
+      {(responseData || isLoading) && <Result hasError={responseData?.ok == false} errorMsg={responseData?.message} data={responseData?.data} isLoading={isLoading} closeModal={closeResult} />}
       {modalOpen && <>
           <ModalBackground />
           <Modal onSubmit={handleSubmit(onSubmit)}>
@@ -103,7 +106,7 @@ const Footbar = () => {
       }
       <Container>
       <LinkContainer>
-        <LinkIcon href="/" selected={true}>
+        <LinkIcon href="/" selected={pathname == "/"}>
           <LinkIconImage src="/img/homeIcon.png" width={31} height={34} alt="home" />
         </LinkIcon>
       </LinkContainer>
@@ -112,7 +115,7 @@ const Footbar = () => {
         <MainButtonIcon src="/img/photoIcon.png" width={46} height={45} alt="picture" />
       </MainButton>
       <LinkContainer>
-        <LinkIcon href="/album" selected={false}>
+        <LinkIcon href="/album" selected={pathname == "/album"}>
           <LinkIconImage src="/img/albumIcon.png" width={48} height={34} alt="album" />
         </LinkIcon>
       </LinkContainer>

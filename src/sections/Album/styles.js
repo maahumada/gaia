@@ -38,6 +38,15 @@ export const WildlifeImage = styled.img`
   object-fit: cover;
 `;
 
+const itemAnimation = keyframes`
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+`
+
+export const SpeciesContainer = styled.div`
+  animation: ${itemAnimation} forwards 1 1s ease-out;
+`
+
 export const SpeciesName = styled.p`
   font-family: 'Nunito', sans-serif;
   font-weight: bold;
