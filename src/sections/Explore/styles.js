@@ -1,7 +1,8 @@
 "use client"
 
 import Image from 'next/image';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import Link from 'next/link';
 
 export const ExploreContainer = styled.div`
   padding: 24px;
@@ -95,6 +96,15 @@ export const WildlifeImage = styled.img`
   object-fit: cover;
 `;
 
+const itemAnimation = keyframes`
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+`
+
+export const SpeciesContainer = styled.div`
+  animation: ${itemAnimation} forwards 1 1s ease-out;
+`
+
 export const SpeciesName = styled.p`
   font-family: 'Nunito', sans-serif;
   font-weight: bold;
@@ -103,3 +113,27 @@ export const SpeciesName = styled.p`
   margin-top: 8px;
   font-size: 14px;
 `;
+
+export const BackButton = styled(Link)`
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 6px;
+`;
+
+export const BackButtonIcon = styled(Image)`
+
+`
+
+export const CommunitySightingsTitle = styled.p`
+  font-size: 24px;
+  font-weight: 700;
+  color: #23513B;
+  margin-bottom: 12px;
+`
+
+export const LoadingText = styled.p`
+  font-size: 20px;
+  font-weight: 700;
+  color: #23513B;
+`

@@ -53,11 +53,17 @@ export const Logo = styled(Image)`
   transform: scale(0);
 `
 
+const statsAnimation = keyframes`
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+`
+
 export const Stats = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2px;
   align-items: center;
+  animation: ${statsAnimation} 0.6s ease-out forwards 1;
 `
 
 export const StatText = styled.p`
@@ -81,6 +87,7 @@ export const FindingsSection = styled.div`
   flex-direction: column;
   gap: 8px;
   width: 100%;
+  margin-top: -24px;
 `
 
 export const Subtitle = styled.h3`
@@ -206,4 +213,19 @@ const rotate = keyframes`
 
 export const FadeInLoader = styled(Image)`
   animation: ${rotate} forwards infinite 1s linear;
+`
+
+const itemAnimation = keyframes`
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+`
+
+export const SpeciesContainer = styled.div`
+  animation: ${itemAnimation} forwards 1 1s ease-out;
+`
+
+export const LoadingText = styled.p`
+  font-size: 20px;
+  font-weight: 700;
+  color: #23513B;
 `

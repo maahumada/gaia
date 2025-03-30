@@ -19,7 +19,12 @@ import {
   GridContainer,
   GridItem,
   WildlifeImage,
-  SpeciesName
+  SpeciesName,
+  BackButton,
+  BackButtonIcon,
+  SpeciesContainer,
+  LoadingText,
+  CommunitySightingsTitle
 } from './styles';
 
 const ExploreSection = () => {
@@ -39,8 +44,10 @@ const ExploreSection = () => {
   ];
 
   const [wildlifeEntries, setWildlifeEntries] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchWildlifeEntries = async () => {
       try {
         const response = await fetch(`/api/capture/`, {
@@ -53,6 +60,8 @@ const ExploreSection = () => {
         setWildlifeEntries(data.data);
       } catch (err) {
         setError(err.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -62,6 +71,9 @@ const ExploreSection = () => {
   return (
     <ExploreContainer>
       <ExploreHeader>
+        <BackButton href="/">
+          <BackButtonIcon src="/img/arrowLeft.png" width={12} height={20} alt="Back" />
+        </BackButton>
         <HeaderTitle>Explore</HeaderTitle>
         <LogoIcon src="/img/explore.png" alt="" width={41} height={25} />
       </ExploreHeader>
@@ -81,9 +93,11 @@ const ExploreSection = () => {
         </UserList>
       </TopUsersCard>
 
-      <GridContainer>
+      <CommunitySightingsTitle>Community sightings</CommunitySightingsTitle>
+
+      {!isLoading && <GridContainer>
         {wildlifeEntries.map((entry) => (
-          <div key={entry._id}>
+          <SpeciesContainer key={entry._id}>
             <Link 
             href={`/species/${entry._id}?returnurl=/explore`} 
             key={entry._id}
@@ -97,9 +111,11 @@ const ExploreSection = () => {
             </GridItem>
             </Link>
             <SpeciesName>{entry.species_name}</SpeciesName>
-          </div>
+          </SpeciesContainer>
         ))}
-      </GridContainer>
+      </GridContainer>}
+
+      {isLoading && <LoadingText>Loading...</LoadingText>}
     </ExploreContainer>
   );
 };

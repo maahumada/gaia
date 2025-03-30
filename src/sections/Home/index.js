@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import BarChart from "@/components/BarChart";
-import { ChartBackgroundImage, ChartContainer, ChartText, Container, FadeIn, FadeInLoader, FindingsSection, GridContainer, GridItem, GridItemContainer, Logo, MapContainer, MoreButton, Spacer, SpeciesName, StatHighlightText, Stats, StatText, StatTextHighlight, Subtitle, Title, WildlifeImage } from "./styles";
+import { ChartBackgroundImage, ChartContainer, ChartText, Container, FadeIn, FadeInLoader, FindingsSection, GridContainer, GridItem, GridItemContainer, LoadingText, Logo, MapContainer, MoreButton, Spacer, SpeciesContainer, SpeciesName, StatHighlightText, Stats, StatText, StatTextHighlight, Subtitle, Title, WildlifeImage } from "./styles";
 import AnimatedText from "@/components/AnimatedText";
 import { userId } from '@/lib/constants';
 import Link from 'next/link';
@@ -32,7 +32,10 @@ const HomeSection = () => {
   const [wildlifeEntries, setWildlifeEntries] = useState([]);
   const [error, setError] = useState(null);
 
+  const [isLoadingSpecies, setIsLoadingSpecies] = useState(true);
+
   useEffect(() => {
+    setIsLoadingSpecies(true);
     const fetchWildlifeEntries = async () => {
       try {
         const response = await fetch(`/api/user/${userId}/album`, {
@@ -45,6 +48,8 @@ const HomeSection = () => {
         setWildlifeEntries(data.data.slice(0,3));
       } catch (err) {
         setError(err.message);
+      } finally {
+        setIsLoadingSpecies(false);
       }
     };
 
@@ -72,7 +77,7 @@ const HomeSection = () => {
   return (
     <Container>
       {isLoading && <FadeIn>
-        <Logo src="/img/gaiaLogo.png" width={309} height={210} alt="Gaia Logo" />
+        <Logo src="/img/gaiaLogo.png" width={309} height={210} alt="Gaia Logo" priority />
         <Title>{randomPhrase}</Title>
       </FadeIn>}
       <FindingsSection>
@@ -82,34 +87,36 @@ const HomeSection = () => {
         </MapContainer>
       </FindingsSection>
       <MoreButton href={`/explore`}>Explore more</MoreButton>
-      <Stats>
+      {!isLoading && <Stats>
         <StatText>
-          <AnimatedText target={27} /> species found by you
+          <AnimatedText target={36} /> species found by you
         </StatText>
         <StatText>
-          you helped <AnimatedText target={7} /> endangered species
+          you helped <AnimatedText target={9} /> endangered species
         </StatText>
         {/* <StatHighlightText>thanks to you</StatHighlightText> */}
-      </Stats>
+      </Stats>}
       <FindingsSection>
         <Subtitle>Your latest findings...</Subtitle>
-        <GridContainer>
+        {!isLoadingSpecies && <GridContainer>
         {wildlifeEntries.map((entry) => (
-          <Link 
-          href={`/species/${entry._id}?returnurl=/`} 
-            key={entry._id}
-            style={{ textDecoration: 'none' }}
-          >
-            <GridItem>
-              <WildlifeImage
-                src={entry.image}
-                alt={entry.species_name}
-              />
-            </GridItem>
-            <SpeciesName>{entry.species_name}</SpeciesName>
-          </Link>
+          <SpeciesContainer key={entry._id}>
+            <Link 
+              href={`/species/${entry._id}?returnurl=/`} 
+              style={{ textDecoration: 'none' }}
+            >
+              <GridItem>
+                <WildlifeImage
+                  src={entry.image}
+                  alt={entry.species_name}
+                />
+              </GridItem>
+              <SpeciesName>{entry.species_name}</SpeciesName>
+            </Link>
+          </SpeciesContainer>
         ))}
-      </GridContainer>
+      </GridContainer>}
+      {isLoadingSpecies && <LoadingText>Loading...</LoadingText>}
       </FindingsSection>
       <ChartContainer>
         <ChartBackgroundImage src="/img/gaiaLogo.png" width={213} height={145} alt="" />

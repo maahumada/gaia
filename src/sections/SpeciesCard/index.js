@@ -76,7 +76,7 @@ const SpeciesCardSection = ({ params }) => {
 
   if(isLoading){
     return <FadeIn>
-      <Logo src="/img/gaiaLogo.png" width={309} height={210} alt="Gaia Logo" />
+      <Logo src="/img/gaiaLogo.png" width={309} height={210} alt="Gaia Logo" priority />
       <Title>{randomPhrase}</Title>
     </FadeIn>
   }
