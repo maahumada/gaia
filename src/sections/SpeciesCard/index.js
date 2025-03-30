@@ -14,7 +14,10 @@ import {
   InfoText,
   TitleContainer,
   BackButtonIcon,
-  EndangeredAlert
+  EndangeredAlert,
+  Title,
+  Logo,
+  FadeIn
 } from './styles';
 
 const SpeciesCardSection = ({ params }) => {
@@ -27,6 +30,7 @@ const SpeciesCardSection = ({ params }) => {
   const { id } = searchParams;
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchSpeciesData = async () => {
       try {
         const response = await fetch(`/api/capture/${id}`, {
@@ -48,6 +52,34 @@ const SpeciesCardSection = ({ params }) => {
   }, []);
 
   const query = useSearchParams();
+
+  const phrases = [
+    "",
+    "Step outside, the next great discovery could be yours!",
+    "Nature is waiting, go find it!",
+    "The world is full of hidden wonders, go find them!",
+    "Every step is a chance to uncover a new species.",
+    "Look closer, nature has secrets to share.",
+    "Every leaf, every wing, every footprint tells a story.",
+    "Discover the unseen, explore the wild!",
+    "Seek, observe, and marvel at the unknown."
+  ];
+
+  const [randomPhrase, setRandomPhrase] = useState(phrases[0]);
+  
+    useEffect(() => {
+      // Get random phrase when component mounts
+      const randomIndex = Math.floor(Math.random() * (phrases.length - 1) + 1);
+      setRandomPhrase(phrases[randomIndex]);
+    }, []); // Empty dependency array means this runs once on mount
+  
+
+  if(isLoading){
+    return <FadeIn>
+      <Logo src="/img/gaiaLogo.png" width={309} height={210} alt="Gaia Logo" />
+      <Title>{randomPhrase}</Title>
+    </FadeIn>
+  }
 
   return (
     <CardContainer>

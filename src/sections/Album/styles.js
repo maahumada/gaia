@@ -1,6 +1,7 @@
 "use client"
 
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import Image from "next/image";
 
 export const AlbumContainer = styled.div`
   padding: 24px;
@@ -45,3 +46,59 @@ export const SpeciesName = styled.p`
   margin-top: 8px;
   font-size: 14px;
 `;
+
+const fadeInSize = keyframes`
+  0% { opacity: 0; transform: scale(0); transform: rotate3d(0, 1, 0, 45deg); }
+  100% { opacity: 1; transform: scale(1); transform: rotate3d(0, 1, 0, 0deg); }
+`
+
+export const Title = styled.h1`
+  font-size: 32px;
+  font-weight: 700;
+  color: #23513B;
+  text-align: center;
+  animation: ${fadeInSize} .6s forwards 1 ease-out;
+  animation-delay: .2s;
+  transform: scale(0);
+`
+
+const fadeIn = keyframes`
+  0% { opacity: 0; transform: scale(0); }
+  100% { opacity: 1; transform: scale(1); }
+`
+
+const floating = keyframes`
+  0% { margin-top: 4px; margin-bottom: -4px; }
+  50% { margin-top: -4px; margin-bottom: 4px; }
+  100% { margin-top: 4px; margin-bottom: -4px; }
+`
+
+export const Logo = styled(Image)`
+  animation: ${floating} 3s forwards infinite cubic-bezier(0.25, 0.1, 0.25, 1.0), ${fadeIn} .6s forwards 1 ease-out;
+  animation-delay: .2s;
+  transform: scale(0);
+`
+
+const fadeOut = keyframes`
+  0% { opacity: 1; z-index: 10; }
+  99% { opacity: 0; z-index: 10; }
+  100% { opacity: 0; z-index: 0; }
+`
+
+export const FadeIn = styled.div`
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100vw;
+  min-height: calc(100vh - 130px);
+  animation: ${fadeOut} .3s forwards 1 ease-out;
+  animation-delay: 2s;
+  background: #F6EDDC;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  gap: 16px;
+  padding: 0 16px;
+`

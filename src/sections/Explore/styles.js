@@ -1,5 +1,6 @@
 "use client"
 
+import Image from 'next/image';
 import styled from 'styled-components';
 
 export const ExploreContainer = styled.div`
@@ -22,9 +23,8 @@ export const HeaderTitle = styled.h1`
   font-size: 32px;
 `;
 
-export const LogoIcon = styled.img`
-  width: 24px;
-  height: 24px;
+export const LogoIcon = styled(Image)`
+  transform: rotateY(180deg);
 `;
 
 export const TopUsersCard = styled.div`

@@ -8,11 +8,35 @@ import {
   GridContainer,
   GridItem,
   WildlifeImage,
-  SpeciesName
+  SpeciesName,
+  FadeIn,
+  Logo,
+  Title
 } from './styles';
 import { userId } from '@/lib/constants';
 
 const AlbumSection = () => {
+
+  const phrases = [
+    "",
+    "Step outside, the next great discovery could be yours!",
+    "Nature is waiting, go find it!",
+    "The world is full of hidden wonders, go find them!",
+    "Every step is a chance to uncover a new species.",
+    "Look closer, nature has secrets to share.",
+    "Every leaf, every wing, every footprint tells a story.",
+    "Discover the unseen, explore the wild!",
+    "Seek, observe, and marvel at the unknown."
+  ];
+
+  const [randomPhrase, setRandomPhrase] = useState(phrases[0]);
+  
+  useEffect(() => {
+    // Get random phrase when component mounts
+    const randomIndex = Math.floor(Math.random() * (phrases.length - 1) + 1);
+    setRandomPhrase(phrases[randomIndex]);
+  }, []); // Empty dependency array means this runs once on mount
+
   const [wildlifeEntries, setWildlifeEntries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -39,7 +63,10 @@ const AlbumSection = () => {
   }, []);
 
   if (isLoading) {
-    return <AlbumContainer>Loading...</AlbumContainer>;
+    return <FadeIn>
+      <Logo src="/img/gaiaLogo.png" width={309} height={210} alt="Gaia Logo" />
+      <Title>{randomPhrase}</Title>
+    </FadeIn>;
   }
 
   if (error) {
