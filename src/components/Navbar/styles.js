@@ -14,11 +14,21 @@ export const Container = styled.div`
   z-index: 1;
 `
 
-export const Logo = styled(Link)`
+export const LogoContainer = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`
+
+export const Logo = styled.p`
   color: #23513B;
   font-size: 40px;
   font-weight: 700;
   text-decoration: none;
+`
+
+export const LogoIcon = styled(Image)`
+  transform: rotateY(180deg);
 `
 
 export const Profile = styled(Image)``
