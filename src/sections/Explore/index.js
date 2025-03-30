@@ -26,15 +26,15 @@ const ExploreSection = () => {
   const topUsers = [
     {
       username: 'maahumada',
-      stats: '3 endangered species found'
+      stats: '7 endangered species found'
     },
     {
       username: 'jlategana',
-      stats: '2 endangered species found'
+      stats: '4 endangered species found'
     },
     {
-      username: 'npirata',
-      stats: '1 invasive species found'
+      username: 'npriotto',
+      stats: '2 endangered species found'
     }
   ];
 
@@ -63,7 +63,7 @@ const ExploreSection = () => {
     <ExploreContainer>
       <ExploreHeader>
         <HeaderTitle>Explore</HeaderTitle>
-        <LogoIcon src="/path-to-logo.svg" alt="" />
+        <LogoIcon src="/img/explore.png" alt="" width={41} height={25} />
       </ExploreHeader>
 
       <TopUsersCard>
